@@ -1,0 +1,98 @@
+{% set book = rec.book %}
+<div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition overflow-hidden border-2 border-purple-100">
+    <!-- Match Score Badge -->
+    <div class="bg-gradient-to-r from-purple-500 to-pink-500 px-4 py-2">
+        <div class="flex items-center justify-between text-white">
+            <span class="font-bold text-sm">
+                <i class="fas fa-chart-line mr-1"></i>
+                {{ (rec.score * 100)|int }}% de compatibilidade
+            </span>
+            <i class="fas fa-magic"></i>
+        </div>
+    </div>
+    
+    <div class="p-4">
+        <div class="flex gap-4 mb-4">
+            {% if book.thumbnail %}
+            <img 
+                src="{{ book.thumbnail }}" 
+                alt="{{ book.title }}"
+                class="w-24 h-36 object-cover rounded shadow-md"
+            >
+            {% else %}
+            <div class="w-24 h-36 bg-gradient-to-br from-gray-200 to-gray-300 rounded shadow-md flex items-center justify-center">
+                <i class="fas fa-book text-gray-400 text-3xl"></i>
+            </div>
+            {% endif %}
+            
+            <div class="flex-1 min-w-0">
+                <h3 class="font-bold text-lg text-gray-900 mb-1 line-clamp-2">
+                    {{ book.title }}
+                </h3>
+                <p class="text-sm text-gray-600 mb-2">
+                    {% if book.authors %}
+                        {{ book.authors|join(', ') }}
+                    {% else %}
+                        Autor desconhecido
+                    {% endif %}
+                </p>
+                
+                {% if book.rating > 0 %}
+                <div class="flex items-center text-sm text-yellow-600 mb-2">
+                    <i class="fas fa-star mr-1"></i>
+                    {{ book.rating }}
+                </div>
+                {% endif %}
+                
+                {% if book.categories %}
+                <div class="flex flex-wrap gap-1">
+                    {% for cat in book.categories[:2] %}
+                    <span class="text-xs px-2 py-1 bg-purple-100 text-purple-700 rounded">
+                        {{ cat }}
+                    </span>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        
+        <!-- Recommendation Reason -->
+        <div class="bg-gradient-to-r from-purple-50 to-pink-50 border-l-4 border-purple-500 p-3 mb-4 rounded">
+            <p class="text-sm text-purple-900">
+                <i class="fas fa-lightbulb mr-1"></i>
+                <strong>Por quê?</strong> {{ rec.reason }}
+            </p>
+        </div>
+        
+        <!-- Description -->
+        {% if book.description %}
+        <p class="text-sm text-gray-600 mb-4 line-clamp-3">
+            {{ book.description[:150] }}{% if book.description|length > 150 %}...{% endif %}
+        </p>
+        {% endif %}
+        
+        <!-- Add Button -->
+        <div id="rec-status-{{ book.id }}">
+            <form 
+                hx-post="/books/add"
+                hx-target="#rec-status-{{ book.id }}"
+                class="space-y-2"
+            >
+                <input type="hidden" name="book_id" value="{{ book.id }}">
+                <input type="hidden" name="title" value="{{ book.title }}">
+                <input type="hidden" name="authors" value="{{ book.authors|join(',') if book.authors else '' }}">
+                <input type="hidden" name="description" value="{{ book.description }}">
+                <input type="hidden" name="categories" value="{{ book.categories|join(',') if book.categories else '' }}">
+                <input type="hidden" name="thumbnail" value="{{ book.thumbnail }}">
+                <input type="hidden" name="rating" value="{{ book.rating }}">
+                
+                <button 
+                    type="submit"
+                    class="w-full px-4 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-lg font-semibold hover:from-purple-700 hover:to-pink-700 transition shadow-lg"
+                >
+                    <i class="fas fa-plus mr-2"></i>Adicionar à Biblioteca
+                </button>
+            </form>
+        </div>
+    </div>
+</div>

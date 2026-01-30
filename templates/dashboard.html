@@ -1,0 +1,162 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - BookBrain{% endblock %}
+
+{% block content %}
+<div class="space-y-8">
+    <!-- Welcome Header -->
+    <div class="bg-gradient-to-r from-indigo-500 to-purple-600 rounded-2xl shadow-xl p-8 text-white">
+        <h1 class="text-4xl font-bold mb-2">
+            <i class="fas fa-home mr-3"></i>Bem-vindo, {{ user.username }}!
+        </h1>
+        <p class="text-indigo-100 text-lg">
+            Gerencie sua biblioteca e descubra novos livros incríveis
+        </p>
+    </div>
+    
+    <!-- Stats Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Total Books -->
+        <div class="bg-white rounded-xl shadow-lg p-6 border-l-4 border-indigo-600">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-gray-600 text-sm font-medium">Total de Livros</p>
+                    <p class="text-4xl font-bold text-gray-800 mt-2">{{ total_books }}</p>
+                </div>
+                <div class="bg-indigo-100 rounded-full p-4">
+                    <i class="fas fa-book text-3xl text-indigo-600"></i>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Reading -->
+        <div class="bg-white rounded-xl shadow-lg p-6 border-l-4 border-yellow-500">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-gray-600 text-sm font-medium">Lendo Agora</p>
+                    <p class="text-4xl font-bold text-gray-800 mt-2">{{ reading }}</p>
+                </div>
+                <div class="bg-yellow-100 rounded-full p-4">
+                    <i class="fas fa-book-open text-3xl text-yellow-600"></i>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Finished -->
+        <div class="bg-white rounded-xl shadow-lg p-6 border-l-4 border-green-500">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-gray-600 text-sm font-medium">Finalizados</p>
+                    <p class="text-4xl font-bold text-gray-800 mt-2">{{ finished }}</p>
+                </div>
+                <div class="bg-green-100 rounded-full p-4">
+                    <i class="fas fa-check-circle text-3xl text-green-600"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Quick Actions -->
+    <div class="bg-white rounded-xl shadow-lg p-8">
+        <h2 class="text-2xl font-bold text-gray-800 mb-6">
+            <i class="fas fa-bolt text-yellow-500 mr-2"></i>Ações Rápidas
+        </h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <a href="/books/search" class="group">
+                <div class="bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl p-6 text-white hover:scale-105 transition transform shadow-lg">
+                    <i class="fas fa-search text-4xl mb-3"></i>
+                    <h3 class="font-bold text-lg">Buscar Livros</h3>
+                    <p class="text-sm text-blue-100 mt-1">Encontre novos títulos</p>
+                </div>
+            </a>
+            
+            <a href="/books/library" class="group">
+                <div class="bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl p-6 text-white hover:scale-105 transition transform shadow-lg">
+                    <i class="fas fa-book text-4xl mb-3"></i>
+                    <h3 class="font-bold text-lg">Minha Biblioteca</h3>
+                    <p class="text-sm text-purple-100 mt-1">Veja seus livros</p>
+                </div>
+            </a>
+            
+            <a href="/recommendations/" class="group">
+                <div class="bg-gradient-to-br from-pink-500 to-pink-600 rounded-xl p-6 text-white hover:scale-105 transition transform shadow-lg">
+                    <i class="fas fa-magic text-4xl mb-3"></i>
+                    <h3 class="font-bold text-lg">Recomendações</h3>
+                    <p class="text-sm text-pink-100 mt-1">IA personalizada</p>
+                </div>
+            </a>
+            
+            <a href="/books/library?status=reading" class="group">
+                <div class="bg-gradient-to-br from-green-500 to-green-600 rounded-xl p-6 text-white hover:scale-105 transition transform shadow-lg">
+                    <i class="fas fa-book-reader text-4xl mb-3"></i>
+                    <h3 class="font-bold text-lg">Lendo Agora</h3>
+                    <p class="text-sm text-green-100 mt-1">Continue lendo</p>
+                </div>
+            </a>
+        </div>
+    </div>
+    
+    <!-- Getting Started (se não tem livros) -->
+    {% if total_books == 0 %}
+    <div class="bg-gradient-to-r from-amber-50 to-orange-50 border-2 border-amber-200 rounded-xl p-8">
+        <div class="text-center">
+            <i class="fas fa-rocket text-6xl text-amber-500 mb-4"></i>
+            <h2 class="text-2xl font-bold text-gray-800 mb-3">Comece sua jornada literária!</h2>
+            <p class="text-gray-600 mb-6 max-w-2xl mx-auto">
+                Ainda não há livros na sua biblioteca. Busque e adicione alguns livros para começar
+                a receber recomendações personalizadas baseadas em IA!
+            </p>
+            <a href="/books/search" class="inline-block px-8 py-3 bg-amber-500 text-white rounded-lg font-semibold hover:bg-amber-600 transition shadow-lg">
+                <i class="fas fa-search mr-2"></i>Buscar Meu Primeiro Livro
+            </a>
+        </div>
+    </div>
+    {% endif %}
+    
+    <!-- Features -->
+    <div class="bg-white rounded-xl shadow-lg p-8">
+        <h2 class="text-2xl font-bold text-gray-800 mb-6">
+            <i class="fas fa-star text-yellow-500 mr-2"></i>Recursos do BookBrain
+        </h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="flex items-start space-x-4">
+                <div class="bg-indigo-100 rounded-lg p-3">
+                    <i class="fas fa-robot text-2xl text-indigo-600"></i>
+                </div>
+                <div>
+                    <h3 class="font-bold text-gray-800 mb-1">Algoritmo de Recomendação</h3>
+                    <p class="text-sm text-gray-600">
+                        Recomendações baseadas em análise semântica do conteúdo dos livros
+                    </p>
+                </div>
+            </div>
+            
+            <div class="flex items-start space-x-4">
+                <div class="bg-purple-100 rounded-lg p-3">
+                    <i class="fas fa-chart-line text-2xl text-purple-600"></i>
+                </div>
+                <div>
+                    <h3 class="font-bold text-gray-800 mb-1">Multi-Factor Scoring</h3>
+                    <p class="text-sm text-gray-600">
+                        Combina similaridade semântica, categorias, autores e avaliações
+                    </p>
+                </div>
+            </div>
+            
+            <div class="flex items-start space-x-4">
+                <div class="bg-pink-100 rounded-lg p-3">
+                    <i class="fas fa-heart text-2xl text-pink-600"></i>
+                </div>
+                <div>
+                    <h3 class="font-bold text-gray-800 mb-1">Personalizado</h3>
+                    <p class="text-sm text-gray-600">
+                        Quanto mais você avalia, melhores ficam as recomendações
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

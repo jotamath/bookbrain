@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block title %}Recomendações - BookBrain{% endblock %}
+
+{% block content %}
+<div class="space-y-6">
+    <!-- Header -->
+    <div class="bg-gradient-to-r from-pink-500 to-purple-600 rounded-xl shadow-xl p-8 text-white">
+        <h1 class="text-4xl font-bold mb-2">
+            <i class="fas fa-magic mr-3"></i>Recomendações Personalizadas
+        </h1>
+        <p class="text-pink-100 text-lg">
+            Baseado nos seus livros favoritos e padrões de leitura (TF-IDF + Multi-Factor Scoring)
+        </p>
+    </div>
+    
+    {% if message %}
+    <!-- Empty State -->
+    <div class="bg-gradient-to-br from-amber-50 to-orange-50 rounded-xl p-12 text-center border-2 border-amber-200">
+        <i class="fas fa-book-reader text-6xl text-amber-400 mb-4"></i>
+        <h3 class="text-2xl font-bold text-gray-800 mb-3">
+            Adicione mais livros para recomendações!
+        </h3>
+        <p class="text-gray-600 mb-6 max-w-2xl mx-auto">
+            {{ message }}
+        </p>
+        <div class="flex justify-center gap-4">
+            <a href="/books/search" class="px-6 py-3 bg-amber-500 text-white rounded-lg font-semibold hover:bg-amber-600 transition">
+                <i class="fas fa-search mr-2"></i>Buscar Livros
+            </a>
+            <a href="/books/library" class="px-6 py-3 bg-white text-amber-600 border-2 border-amber-500 rounded-lg font-semibold hover:bg-amber-50 transition">
+                <i class="fas fa-star mr-2"></i>Avaliar Livros
+            </a>
+        </div>
+    </div>
+    {% else %}
+    
+    <!-- How it Works -->
+    <div class="bg-white rounded-xl shadow-lg p-6">
+        <h2 class="text-xl font-bold text-gray-800 mb-4">
+            <i class="fas fa-lightbulb text-yellow-500 mr-2"></i>Como funciona?
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 text-sm">
+            <div class="flex items-start space-x-3">
+                <div class="bg-indigo-100 rounded-full p-2 mt-1">
+                    <i class="fas fa-robot text-indigo-600"></i>
+                </div>
+                <div>
+                    <p class="font-semibold text-gray-800">TF-IDF (40%)</p>
+                    <p class="text-gray-600">Similaridade semântica do conteúdo</p>
+                </div>
+            </div>
+            <div class="flex items-start space-x-3">
+                <div class="bg-purple-100 rounded-full p-2 mt-1">
+                    <i class="fas fa-tags text-purple-600"></i>
+                </div>
+                <div>
+                    <p class="font-semibold text-gray-800">Categorias (30%)</p>
+                    <p class="text-gray-600">Gêneros em comum</p>
+                </div>
+            </div>
+            <div class="flex items-start space-x-3">
+                <div class="bg-pink-100 rounded-full p-2 mt-1">
+                    <i class="fas fa-user-edit text-pink-600"></i>
+                </div>
+                <div>
+                    <p class="font-semibold text-gray-800">Autores (20%)</p>
+                    <p class="text-gray-600">Autores favoritos</p>
+                </div>
+            </div>
+            <div class="flex items-start space-x-3">
+                <div class="bg-yellow-100 rounded-full p-2 mt-1">
+                    <i class="fas fa-star text-yellow-600"></i>
+                </div>
+                <div>
+                    <p class="font-semibold text-gray-800">Avaliações (10%)</p>
+                    <p class="text-gray-600">Qualidade geral</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Recommendations Grid -->
+    {% if recommendations|length > 0 %}
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {% for rec in recommendations %}
+        {% include 'partials/recommendation_card.html' %}
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl p-12 text-center border-2 border-dashed border-gray-300">
+        <i class="fas fa-search text-6xl text-gray-300 mb-4"></i>
+        <h3 class="text-xl font-bold text-gray-700 mb-2">
+            Nenhuma recomendação encontrada
+        </h3>
+        <p class="text-gray-600">
+            Não encontramos livros correspondentes no momento. Tente avaliar mais livros!
+        </p>
+    </div>
+    {% endif %}
+    {% endif %}
+</div>
+{% endblock %}

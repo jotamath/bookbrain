@@ -1,0 +1,27 @@
+<div class="flex items-center gap-2">
+    <span class="text-sm text-gray-700 font-medium">Sua avaliação:</span>
+    <form 
+        hx-post="/books/{{ book.id }}/rate"
+        hx-target="#rating-{{ book.id }}"
+        hx-swap="innerHTML"
+        class="flex gap-1"
+    >
+        {% for i in range(1, 6) %}
+        <button
+            type="submit"
+            name="rating"
+            value="{{ i }}"
+            class="text-xl hover:scale-110 transition {% if book.user_rating and book.user_rating >= i %}text-yellow-500{% else %}text-gray-300{% endif %}"
+        >
+            {% if book.user_rating and book.user_rating >= i %}
+            <i class="fas fa-star"></i>
+            {% else %}
+            <i class="far fa-star"></i>
+            {% endif %}
+        </button>
+        {% endfor %}
+    </form>
+    {% if book.user_rating %}
+    <span class="text-sm text-gray-600">({{ book.user_rating }}/5)</span>
+    {% endif %}
+</div>

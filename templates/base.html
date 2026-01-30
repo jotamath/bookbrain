@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}BookBrain Modern{% endblock %}</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- HTMX -->
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        [x-cloak] { display: none !important; }
+        .htmx-swapping { opacity: 0; transition: opacity 200ms ease-out; }
+        .htmx-settling { opacity: 1; }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    {% if user %}
+    <!-- Navbar -->
+    <nav class="bg-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-8">
+                    <a href="/dashboard" class="flex items-center space-x-2">
+                        <i class="fas fa-book-open text-2xl text-indigo-600"></i>
+                        <span class="text-xl font-bold text-gray-800">BookBrain</span>
+                    </a>
+                    
+                    <div class="hidden md:flex space-x-4">
+                        <a href="/dashboard" class="px-3 py-2 rounded-md text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 transition">
+                            <i class="fas fa-home mr-2"></i>Dashboard
+                        </a>
+                        <a href="/books/library" class="px-3 py-2 rounded-md text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 transition">
+                            <i class="fas fa-book mr-2"></i>Biblioteca
+                        </a>
+                        <a href="/books/search" class="px-3 py-2 rounded-md text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 transition">
+                            <i class="fas fa-search mr-2"></i>Buscar
+                        </a>
+                        <a href="/recommendations/" class="px-3 py-2 rounded-md text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 transition">
+                            <i class="fas fa-magic mr-2"></i>Recomendações
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <span class="text-gray-700">
+                        <i class="fas fa-user-circle mr-1"></i>
+                        {{ user.username }}
+                    </span>
+                    <form method="POST" action="/logout">
+                        <button type="submit" class="px-4 py-2 text-sm text-gray-700 hover:text-red-600 transition">
+                            <i class="fas fa-sign-out-alt mr-1"></i>Sair
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div class="md:hidden border-t border-gray-200">
+            <div class="px-4 py-3 space-y-1">
+                <a href="/dashboard" class="block px-3 py-2 rounded-md text-gray-700 hover:bg-indigo-50">
+                    <i class="fas fa-home mr-2"></i>Dashboard
+                </a>
+                <a href="/books/library" class="block px-3 py-2 rounded-md text-gray-700 hover:bg-indigo-50">
+                    <i class="fas fa-book mr-2"></i>Biblioteca
+                </a>
+                <a href="/books/search" class="block px-3 py-2 rounded-md text-gray-700 hover:bg-indigo-50">
+                    <i class="fas fa-search mr-2"></i>Buscar
+                </a>
+                <a href="/recommendations/" class="block px-3 py-2 rounded-md text-gray-700 hover:bg-indigo-50">
+                    <i class="fas fa-magic mr-2"></i>Recomendações
+                </a>
+            </div>
+        </div>
+    </nav>
+    {% endif %}
+    
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 py-8">
+        {% block content %}{% endblock %}
+    </main>
+    
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200 mt-12">
+        <div class="max-w-7xl mx-auto px-4 py-6 text-center text-gray-600">
+            <p>BookBrain Modern - Sistema de Recomendação de Livros com IA</p>
+            <p class="text-sm mt-2">Powered by FastAPI + HTMX + TF-IDF</p>
+        </div>
+    </footer>
+    
+    {% block scripts %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,51 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+
+# --- Distribuição / Builds ---
+build/
+dist/
+*.egg-info/
+
+# --- Variáveis de Ambiente (CRÍTICO: NUNCA SUBIR) ---
+.env
+.env.prod
+.env.dev
+.env.local
+
+# --- Ambientes Virtuais (uv / venv) ---
+.venv/
+venv/
+env/
+ENV/
+
+# --- Banco de Dados Local (SQLite) ---
+# Não queremos subir o banco de dados de teste para o GitHub
+*.db
+*.sqlite3
+*.sqlite
+
+# --- IDEs e Editores ---
+.vscode/
+.idea/
+*.swp
+.DS_Store
+
+# --- Logs ---
+*.log
+logs/
+
+# --- Testes e Coverage ---
+.pytest_cache/
+.coverage
+htmlcov/
+coverage.xml
+
+# --- Docker ---
+# Ignorar se você tiver arquivos de override locais, mas mantenha o Dockerfile
+docker-compose.override.yml
+
+# --- UV (Cache local do gerenciador de pacotes) ---
+# Nota: uv.lock DEVE ser commitado, mas o cache não.
+.uv/
