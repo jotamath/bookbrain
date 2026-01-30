@@ -1,7 +1,10 @@
 # 📚 BookBrain
 
 Um sistema moderno de gerenciamento de biblioteca pessoal e recomendação de livros, construído com foco em performance e simplicidade no frontend usando **HTMX** e **TailwindCSS**, com um backend robusto em **FastAPI**.
-
+### Sistema de Recomendação
+<img width="600" height="400" alt="Captura de tela 2026-01-29 230831" src="https://github.com/user-attachments/assets/fc12f199-bb18-49a9-baa9-d89d9b2a309d" />
+### Biblioteca
+<img width="600" height="400" alt="Captura de tela 2026-01-29 224849" src="https://github.com/user-attachments/assets/1c8658b4-d494-4e0e-a12a-0d0965e88a82" />
 
 
 ## 🚀 Sobre o Projeto
